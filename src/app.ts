@@ -8,17 +8,11 @@ import cookieParser = require('cookie-parser'); // this module doesn't use the E
 
 const app: express.Express = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use('/', index);
 app.use('/users', users);
@@ -38,7 +32,7 @@ if (app.get('env') === 'development') {
 
   app.use((error: any, req, res, next) => {
     res.status(error['status'] || 500);
-    res.render('error', {
+    res.json({
       message: error.message,
       error
     });
@@ -49,7 +43,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use((error: any, req, res, next) => {
   res.status(error['status'] || 500);
-  res.render('error', {
+  res.json({
     message: error.message,
     error: {}
   });

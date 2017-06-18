@@ -46,12 +46,18 @@ class UserModel {
                 password: credentials.password
             }
             this.db.collection('users').findOne(query, (err, doc) => {
-                if(err){
+                if (err) {
                     reject(err)
                 }
                 else {
-                    console.log('logged in user ', doc)
-                    resolve(doc)
+                    if (doc === null) {
+                        reject('No user found')
+                    }
+                    else {
+                        console.log('logged in user ', doc)
+                        resolve(doc)
+                    }
+
                 }
             })
         })

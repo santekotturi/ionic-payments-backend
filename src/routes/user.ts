@@ -15,7 +15,7 @@ const options: cors.CorsOptions = {
   allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token"],
   credentials: false,
   methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
-  // origin: API_URL,
+  // origin: 'localhost',
   preflightContinue: false
 };
 
@@ -47,7 +47,7 @@ user.use(jwtAuthentication)
 
 user.get('/test', (req: ITokenRequest, res: Response, next: Function) => {
   console.log('DECODED TOKEN! ', req.decodedToken.email);
-  res.status(200).end()
+  res.status(200).json({status: 'success'})
 })
 
 

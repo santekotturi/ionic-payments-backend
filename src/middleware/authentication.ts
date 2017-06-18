@@ -9,8 +9,7 @@ let jwtAuthentication = (req: ITokenRequest, res: Response, next: Function) => {
     if (req.method === 'OPTIONS') {
         res.status(200).end();
     } else {
-
-        let token = req.headers['x-auth-token'];
+        let token = req.headers['x-access-token'];
         console.log('auth token -> ', token);
         if (token) {
             let decoded = decode(token, 'SUPER_SECRET')

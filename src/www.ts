@@ -1,6 +1,7 @@
 import app from './app';
 import * as debugModule from 'debug';
 import * as http from 'http';
+import { connect as connectDB } from './config/db';
 
 const debug = debugModule('node-express-typescript:server');
 
@@ -70,4 +71,10 @@ function onListening() {
     : 'port ' + addr.port;
 
   console.log('Listening on ' + bind);
+  connectDB()
+  .then(() => {
+    console.log('DB connected')
+  }, (err) => {
+    console.log('Error connecting to db -> ', err)
+  })
 }

@@ -32,24 +32,14 @@ user.get('/', (req: Request, res: Response, next: Function) => {
 
 user.post('/signup', (req: Request, res: Response, next: Function) => {
   userService.createUser(req.body)
-    .then((user) => {
-      res.status(200)
-        .json({ user })
-    }, (error) => {
-      res.status(401)
-        .json({
-          error,
-          message: 'Error creating user'
-        })
-    })
-
+    .then((user) => res.status(200).json({ user, status: 'success' })
+    , (error) => res.status(401).json({ error, status: 'fail' }))
 });
 
 user.post('/login', (req: Request, res: Response, next: Function) => {
   userService.login(req.body)
-    .then((user) => res.status(200).json(user)
-    , (err) => res.status(401).json(err)
-    )
+    .then((user) => res.status(200).json({ user, status: 'success' })
+    , (err) => res.status(401).json({ err, status: 'fail' }))
 });
 
 /* protect all routes from here on with jwt auth */

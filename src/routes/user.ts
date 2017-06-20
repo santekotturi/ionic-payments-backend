@@ -45,11 +45,6 @@ user.post('/login', (req: Request, res: Response, next: Function) => {
 /* protect all routes from here on with jwt auth */
 user.use(jwtAuthentication)
 
-user.get('/test', (req: ITokenRequest, res: Response, next: Function) => {
-  console.log('DECODED TOKEN! ', req.decodedToken.email);
-  res.status(200).json({ status: 'success' })
-})
-
 user.post('/checkout', (req: ITokenRequest, res: Response, next: Function) => {
   userService.processCheckout(req.body)
     .then(() => {

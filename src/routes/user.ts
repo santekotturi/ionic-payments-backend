@@ -47,8 +47,15 @@ user.use(jwtAuthentication)
 
 user.get('/test', (req: ITokenRequest, res: Response, next: Function) => {
   console.log('DECODED TOKEN! ', req.decodedToken.email);
-  res.status(200).json({status: 'success'})
+  res.status(200).json({ status: 'success' })
 })
 
+user.post('/checkout', (req: ITokenRequest, res: Response, next: Function) => {
+  userService.processCheckout(req.body)
+    .then(() => {
+      res.status(200).json({ status: 'success' })
+    }, (err) => res.status(401).json({err, status: 'fail' }))
+
+})
 
 export default user;
